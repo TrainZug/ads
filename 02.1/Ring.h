@@ -9,6 +9,7 @@ class Ring {
 		RingNode* anker;
 	public:
 		Ring ();
+		~Ring();
 		void addNode (string, string);
 		bool search (string);
 		void print ();

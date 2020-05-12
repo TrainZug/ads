@@ -10,6 +10,21 @@ Tree::Tree () {
 	NodeIDCounter = 0;
 }
 
+Tree::~Tree () {
+	delRescursive(anker);
+}
+
+void Tree::delRescursive (TreeNode* tmp) {
+	if (tmp != nullptr)
+	{
+		delRescursive(tmp->getLeft());
+		delRescursive(tmp->getRight());
+		delete tmp;
+	}
+}
+
+
+
 void Tree::addNode (string name, int alter, double einkommen, int plz) {
 	TreeNode* neu = new TreeNode(alter + einkommen + plz, NodeIDCounter++, name, alter, einkommen, plz);
 	if (anker == nullptr) {
@@ -92,7 +107,7 @@ void Tree::deleteNode (int posId) {
 	if (parent == nullptr) // erster knoten
 		anker = tmp2;
 	else if (parent->getLeft() == gefundener_knoten) // in parent left oder right neu machen
-		parent->setLeft(tmp2); // 
+		parent->setLeft(tmp2);                       // 
 	else
 		parent->setRight(tmp2);
 

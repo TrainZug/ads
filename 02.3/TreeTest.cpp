@@ -286,8 +286,9 @@ TEST_CASE("TreeNode Testing", "[TREENODE]") {
 		REQUIRE(ref->getPLZ() == 1000);
 
 	}
-	delete ref;
-	delete smallTree;
+	// Auskommentiert damit der Dekonstruktor richtig funktionieren kann
+	//delete ref;
+	//delete smallTree;
 }
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // http://www.hashemall.com/

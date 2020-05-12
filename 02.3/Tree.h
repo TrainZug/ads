@@ -15,6 +15,8 @@ class Tree {
 		void printPreorder (TreeNode*);
 	public:
 		Tree ();
+		~Tree ();
+		void delRescursive(TreeNode*);
 		void addNode (string, int, double, int);
 		void deleteNode (int);
 		bool searchNode (string);
