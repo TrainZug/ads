@@ -3,6 +3,7 @@
 #include <iostream>
 #include <iomanip>
 #include <queue>
+#include <string>
 
 using namespace std;
 
@@ -50,7 +51,7 @@ void Tree::addNode (string name, int alter, double einkommen, int plz) {
 
 		}
 
-		// einfügen
+		// einfï¿½gen
 		neu->setParent(parent);
 		if (neu->getNodePosID() > parent->getNodePosID()) {
 			parent->setRight(neu);
@@ -59,7 +60,7 @@ void Tree::addNode (string name, int alter, double einkommen, int plz) {
 		}
 		visited.push_back(neu);
 
-		// von neu eingefügten bis wurzel gucken ob zwei rote aufeinander folgen
+		// von neu eingefï¿½gten bis wurzel gucken ob zwei rote aufeinander folgen
 		for (int i = visited.size() - 1; i >= 0; i--) {
 			TreeNode* node = visited[i];
 			// beim anker stoppen
@@ -153,7 +154,7 @@ void Tree::printPreorder (TreeNode* tmp) {
 
 void Tree::printAll () {
 	if (anker == nullptr) {
-		cout << "Keine Einträge vorhanden" << endl;
+		cout << "Keine Eintrï¿½ge vorhanden" << endl;
 		return;
 	}
 
@@ -165,28 +166,103 @@ void Tree::printAll () {
 
 void Tree::printLevelOrder () {
 	if (anker == nullptr) {
-		cout << "Keine Einträge vorhanden" << endl;
+		cout << "Keine Eintrï¿½ge vorhanden" << endl;
 		return;
 	}
 
 	printTableHead();
 	printTableSep();
 
+	// Levelorder als Binï¿½rbaum
 	queue<TreeNode*> q;
 	q.push(anker); // anker reintun
 	while (!q.empty()) {
-		TreeNode* ptrnode = q.front(); // erstes holen
-		q.pop(); // erstes löschen
-		ptrnode->print(); // ausgeben
-		if (ptrnode->getLeft() != nullptr) {
-			q.push(ptrnode->getLeft()); // links hinten anhängen
+		TreeNode* tmp = q.front(); // erstes holen
+		q.pop();                   // erstes lï¿½schen
+		tmp->print();              // ausgeben
+		if (tmp->getLeft() != nullptr) {
+			q.push(tmp->getLeft()); // links hinten anhï¿½ngen
 		}
-		if (ptrnode->getRight() != nullptr) {
-			q.push(ptrnode->getRight()); // rechts hinten anhängen
+		if (tmp->getRight() != nullptr) {
+			q.push(tmp->getRight()); // rechts hinten anhï¿½ngen
 		}
 	}
 
 	printTableSep();
+
+	// Levelorder als 2-3-4-Baum
+	if (anker != nullptr) {
+		queue<TreeNode*> schwarze;
+		queue<int> niveaus;
+		int niveau = 0, oldNiveau = 0;
+
+		schwarze.push(anker);
+		niveaus.push(niveau);
+
+		while (!schwarze.empty()) {
+			bool leftN    = false;
+			TreeNode* tmp = schwarze.front(); // erstes rausnehmen
+			schwarze.pop();
+
+			oldNiveau = niveau;
+			niveau    = niveaus.front(); // niveau rausnehmen
+			niveaus.pop();
+
+			if (tmp == nullptr)
+				break;
+
+			string nodes = "(";
+
+			TreeNode* left  = tmp->getLeft();
+			TreeNode* right = tmp->getRight();
+
+			if (left != nullptr) {
+				if (left->getRed()) {
+					// falls links existiert
+					nodes += to_string(left->getNodePosID()); // id speichern
+					leftN = true;
+
+					schwarze.push(left->getLeft()); // da rot ist links und rechts schwarz also anhï¿½ngen
+					niveaus.push(niveau + 1);       // mit niveau + 1
+
+					schwarze.push(left->getRight());
+					niveaus.push(niveau + 1);
+
+				} else {
+					schwarze.push(left);      // wenn nicht rot dann schwarz und deswegen anhï¿½ngen
+					niveaus.push(niveau + 1); // mit niveau + 1
+				}
+			}
+
+			nodes += (leftN ? "," : "") + to_string(tmp->getNodePosID()); 
+
+			if (right != nullptr) {
+				if (right->getRed()) {
+					nodes += "," + to_string(right->getNodePosID());
+
+					schwarze.push(right->getLeft());
+					niveaus.push(niveau + 1);
+
+					schwarze.push(right->getRight());
+					niveaus.push(niveau + 1);
+
+				} else {
+					schwarze.push(right);
+					niveaus.push(niveau + 1);
+				}
+			}
+
+			nodes += ")";
+
+			if (niveau == oldNiveau && niveau != 0) { // niveau hat sich nicht geï¿½ndert also einfach dahinter ausgeben
+				cout << nodes << " ";
+			} else {
+				cout << endl << "Niveau " << to_string(niveau) << ": " << nodes << " "; // niveau hat sich geï¿½ndert also neues niveau ausgeben
+			}
+		}
+	}
+	cout << endl;
+
 }
 
 bool Tree::rotateTreeRight (TreeNode* a, TreeNode* b) {
@@ -196,7 +272,7 @@ bool Tree::rotateTreeRight (TreeNode* a, TreeNode* b) {
 
 	if (a != nullptr && a->getParent() != nullptr && a->getLeft() == b) {
 		TreeNode* parent = a->getParent();
-		parent->setLeft(a->getRight()); // 1. parent übernimmt links den linken rechten von a
+		parent->setLeft(a->getRight()); // 1. parent ï¿½bernimmt links den linken rechten von a
 		if (parent->getLeft() != nullptr) { // wenn es den linken teilbaum von a gibt
 			parent->getLeft()->setParent(parent); // 2. kriegt der linke knoten als parent den parent von a
 		}
@@ -226,7 +302,7 @@ bool Tree::rotateTreeLeft (TreeNode* a, TreeNode* b) {
 
 	if (a != nullptr && a->getParent() != nullptr && a->getRight() == b) {
 		TreeNode* parent = a->getParent();
-		parent->setRight(a->getLeft()); // 1. parent übernimmt rechts den linken teilbaum von a
+		parent->setRight(a->getLeft()); // 1. parent ï¿½bernimmt rechts den linken teilbaum von a
 		if (parent->getRight() != nullptr) { // wenn es den rechten teilbaum von a gibt
 			parent->getRight()->setParent(parent); // 2. kriegt der rechte knoten als parent den parent von a
 		}
