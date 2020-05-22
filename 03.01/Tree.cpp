@@ -51,7 +51,7 @@ void Tree::addNode (string name, int alter, double einkommen, int plz) {
 
 		}
 
-		// einf�gen
+		// einfügen
 		neu->setParent(parent);
 		if (neu->getNodePosID() > parent->getNodePosID()) {
 			parent->setRight(neu);
@@ -60,7 +60,7 @@ void Tree::addNode (string name, int alter, double einkommen, int plz) {
 		}
 		visited.push_back(neu);
 
-		// von neu eingef�gten bis wurzel gucken ob zwei rote aufeinander folgen
+		// von neu eingefügten bis wurzel gucken ob zwei rote aufeinander folgen
 		for (int i = visited.size() - 1; i >= 0; i--) {
 			TreeNode* node = visited[i];
 			// beim anker stoppen
@@ -154,7 +154,7 @@ void Tree::printPreorder (TreeNode* tmp) {
 
 void Tree::printAll () {
 	if (anker == nullptr) {
-		cout << "Keine Eintr�ge vorhanden" << endl;
+		cout << "Keine Einträge vorhanden" << endl;
 		return;
 	}
 
@@ -166,25 +166,25 @@ void Tree::printAll () {
 
 void Tree::printLevelOrder () {
 	if (anker == nullptr) {
-		cout << "Keine Eintr�ge vorhanden" << endl;
+		cout << "Keine Einträge vorhanden" << endl;
 		return;
 	}
 
 	printTableHead();
 	printTableSep();
 
-	// Levelorder als Bin�rbaum
+	// Levelorder als Binärbaum
 	queue<TreeNode*> q;
 	q.push(anker); // anker reintun
 	while (!q.empty()) {
 		TreeNode* tmp = q.front(); // erstes holen
-		q.pop();                   // erstes l�schen
+		q.pop();                   // erstes löschen
 		tmp->print();              // ausgeben
 		if (tmp->getLeft() != nullptr) {
-			q.push(tmp->getLeft()); // links hinten anh�ngen
+			q.push(tmp->getLeft()); // links hinten anhängen
 		}
 		if (tmp->getRight() != nullptr) {
-			q.push(tmp->getRight()); // rechts hinten anh�ngen
+			q.push(tmp->getRight()); // rechts hinten anhängen
 		}
 	}
 
@@ -222,14 +222,14 @@ void Tree::printLevelOrder () {
 					nodes += to_string(left->getNodePosID()); // id speichern
 					leftN = true;
 
-					schwarze.push(left->getLeft()); // da rot ist links und rechts schwarz also anh�ngen
+					schwarze.push(left->getLeft()); // da rot ist links und rechts schwarz also anhängen
 					niveaus.push(niveau + 1);       // mit niveau + 1
 
 					schwarze.push(left->getRight());
 					niveaus.push(niveau + 1);
 
 				} else {
-					schwarze.push(left);      // wenn nicht rot dann schwarz und deswegen anh�ngen
+					schwarze.push(left);      // wenn nicht rot dann schwarz und deswegen anhängen
 					niveaus.push(niveau + 1); // mit niveau + 1
 				}
 			}
@@ -254,10 +254,10 @@ void Tree::printLevelOrder () {
 
 			nodes += ")";
 
-			if (niveau == oldNiveau && niveau != 0) { // niveau hat sich nicht ge�ndert also einfach dahinter ausgeben
+			if (niveau == oldNiveau && niveau != 0) { // niveau hat sich nicht geändert also einfach dahinter ausgeben
 				cout << nodes << " ";
 			} else {
-				cout << endl << "Niveau " << to_string(niveau) << ": " << nodes << " "; // niveau hat sich ge�ndert also neues niveau ausgeben
+				cout << endl << "Niveau " << to_string(niveau) << ": " << nodes << " "; // niveau hat sich geändert also neues niveau ausgeben
 			}
 		}
 	}
@@ -272,7 +272,7 @@ bool Tree::rotateTreeRight (TreeNode* a, TreeNode* b) {
 
 	if (a != nullptr && a->getParent() != nullptr && a->getLeft() == b) {
 		TreeNode* parent = a->getParent();
-		parent->setLeft(a->getRight()); // 1. parent �bernimmt links den linken rechten von a
+		parent->setLeft(a->getRight()); // 1. parent übernimmt links den linken rechten von a
 		if (parent->getLeft() != nullptr) { // wenn es den linken teilbaum von a gibt
 			parent->getLeft()->setParent(parent); // 2. kriegt der linke knoten als parent den parent von a
 		}
@@ -302,7 +302,7 @@ bool Tree::rotateTreeLeft (TreeNode* a, TreeNode* b) {
 
 	if (a != nullptr && a->getParent() != nullptr && a->getRight() == b) {
 		TreeNode* parent = a->getParent();
-		parent->setRight(a->getLeft()); // 1. parent �bernimmt rechts den linken teilbaum von a
+		parent->setRight(a->getLeft()); // 1. parent übernimmt rechts den linken teilbaum von a
 		if (parent->getRight() != nullptr) { // wenn es den rechten teilbaum von a gibt
 			parent->getRight()->setParent(parent); // 2. kriegt der rechte knoten als parent den parent von a
 		}
