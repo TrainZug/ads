@@ -13,7 +13,7 @@ class TreeNode {
 		int PLZ;
 		TreeNode* left;
 		TreeNode* right;
-		TreeNode* parent;
+		TreeNode* parent; // parent vom Knoten speichern, damit man keine Methode brauch, die den Parent sucht
 	public:
 		TreeNode (int posId, int nodeId, string name, int alter, double einkommen, int plz);
 

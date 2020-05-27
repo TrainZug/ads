@@ -24,7 +24,7 @@ void Tree::delRescursive (TreeNode* tmp) {
 	}
 }
 
-void Tree::addNode (string name, int alter, double einkommen, int plz) {
+bool Tree::addNode (string name, int alter, double einkommen, int plz) {
 	TreeNode* neu = new TreeNode(alter + einkommen + plz, NodeIDCounter++, name, alter, einkommen, plz);
 	if (anker == nullptr) {
 		anker = neu;
@@ -101,8 +101,8 @@ void Tree::addNode (string name, int alter, double einkommen, int plz) {
 				}
 			}
 		}
-
 	}
+	return true;
 }
 
 bool Tree::searchNode (string name) {
@@ -234,7 +234,7 @@ void Tree::printLevelOrder () {
 				}
 			}
 
-			nodes += (leftN ? "," : "") + to_string(tmp->getNodePosID()); 
+			nodes += (leftN ? "," : "") + to_string(tmp->getNodePosID());
 
 			if (right != nullptr) {
 				if (right->getRed()) {

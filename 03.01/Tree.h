@@ -15,15 +15,15 @@ class Tree {
 		bool split4Node (TreeNode*);
 		bool rotateTreeRight (TreeNode*, TreeNode*);
 		bool rotateTreeLeft (TreeNode*, TreeNode*);
-		bool is4er (TreeNode*);
-		void printPreorder (TreeNode*);
-		void printTableHead ();
-		void printTableSep ();
+		bool is4er (TreeNode*);         // ueberpruefen ob 4er knoten
+		void printPreorder (TreeNode*); // recursive preorder
+		void printTableHead ();         // ausgabe von tabellenkopf
+		void printTableSep ();          // ausgabe von ---------------
+		void delRescursive (TreeNode*); // dekonstruktor recursive loeschen
 	public:
 		Tree ();
 		~Tree ();
-		void delRescursive (TreeNode*);
-		void addNode (string, int, double, int);
+		bool addNode (string, int, double, int);
 		bool searchNode (string);
 		void printAll ();
 		void printLevelOrder ();
