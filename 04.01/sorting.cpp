@@ -33,32 +33,36 @@ namespace sorting {
 	//************
 	void MergeSort (vector<int> & a, vector<int> & b, int low, int high) {
 		if (low < high) {
-			int q = (low + high) / 2;
-			MergeSort(a, b, low, q);
-			MergeSort(a, b, q + 1, high);
-			Merge(a, b, low, q, high);
+			int center = (low + high) / 2;
+			MergeSort(a, b, low, center);
+			MergeSort(a, b, center + 1, high);
+			Merge(a, b, low, center + 1, high);
 		}
 	}
 
 	void Merge (vector<int> & a, vector<int> & b, int left, int mid, int right) {
-		for (int i = left; i <= right; i++) {
-			b[i] = a[i];
-		}
-		int i = left;
-		int l = left;
-		int r = mid + 1;
-		while (l <= mid && r <= right) {
-			if (b[l] <= b[r]) {
-				a[i++] = b[l++];
+		int leftEnd     = mid - 1;
+		int tmpPos      = left;
+		int numElements = right - left + 1;
+
+		while (left <= leftEnd && mid <= right) {
+			if (a[left] <= a[mid]) {
+				b[tmpPos++] = a[left++];
 			} else {
-				a[i++] = b[r++];
+				b[tmpPos++] = a[mid++];
 			}
 		}
-		while (l <= mid) {
-			a[i++] = b[l++];
+		while (left <= leftEnd) {
+			b[tmpPos++] = a[left++];
 		}
-		while (r <= right) {
-			a[i++] = b[r++];
+		while (mid <= right) {
+			b[tmpPos++] = a[mid++];
+		}
+		int i = 0;
+		while (i < numElements) {
+			a[right] = b[right];
+			i++;
+			right--;
 		}
 	}
 
@@ -108,7 +112,7 @@ namespace sorting {
 		for (int gap = n / 2; gap > 0; gap /= 2) {
 			for (int i = gap; i < n; i += 1) {
 				int temp = a[i];
-				int j = i;
+				int j    = i;
 				for (; j >= gap && a[j - gap] > temp; j -= gap) {
 					a[j] = a[j - gap];
 				}
