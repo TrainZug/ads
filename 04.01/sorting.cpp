@@ -1,5 +1,6 @@
 #include "sorting.h"
 #include <algorithm>
+#include <cmath>
 
 using namespace std;
 
@@ -109,22 +110,24 @@ namespace sorting {
 	// Shellsort *
 	//************
 	void ShellSort (vector<int> & a, int n) {
-		for (int gap = n / 2; gap > 0; gap /= 2) {
-			for (int i = gap; i < n; i += 1) {
-				int temp = a[i];
-				int j    = i;
-				for (; j >= gap && a[j - gap] > temp; j -= gap) {
+		int k = log2(n) - 1;
+		for (int gap = pow(2, k) - 1; gap > 0; gap = pow(2, --k) - 1)
+			for (int i = gap; i < n; i++) {
+				int tmp = a[i];
+				int j   = i;
+				for (; j >= gap && tmp < a[j - gap]; j -= gap) {
 					a[j] = a[j - gap];
 				}
-				a[j] = temp;
+				a[j] = tmp;
 			}
-		}
+
 	}
 
 	void randomizeVector (vector<int> & array, int n) {
 		array.resize(n);
-		for (unsigned int i = 0; i < array.size(); i++)
-			array[i]        = rand() % 1000000;
+		for (unsigned int i = 0; i < array.size(); i++) {
+			array[i] = rand() % 1000000;
+		}
 	}
 
 }
