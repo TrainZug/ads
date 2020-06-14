@@ -59,11 +59,8 @@ namespace sorting {
 		while (mid <= right) {
 			b[tmpPos++] = a[mid++];
 		}
-		int i = 0;
-		while (i < numElements) {
+		for (int i = 0; i < numElements; i++, right--) {
 			a[right] = b[right];
-			i++;
-			right--;
 		}
 	}
 
@@ -111,7 +108,7 @@ namespace sorting {
 	//************
 	void ShellSort (vector<int> & a, int n) {
 		int k = log2(n) - 1;
-		for (int gap = pow(2, k) - 1; gap > 0; gap = pow(2, --k) - 1)
+		for (int gap = pow(2, k) - 1; gap > 0; gap = pow(2, --k) - 1) {
 			for (int i = gap; i < n; i++) {
 				int tmp = a[i];
 				int j   = i;
@@ -120,6 +117,7 @@ namespace sorting {
 				}
 				a[j] = tmp;
 			}
+		}
 
 	}
 
